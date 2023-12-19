@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX</title>
+</head>
+<body>
+    <button>Recuperar Dados</button>
+    <br />
+    <br />
+    <script>
+        const loadData = () => {
+            const xhr = new XMLHttpRequest ()
+            
+            xhr.open("GET", "https://api.github.com/users/BarbasPedro")
+            xhr.send(null)
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState === 4) {
+                    xhr.responseText
+                    const res = JSON.parse(xhr.responseText)
+                
+                    const name = res.name
+                    const avatarUrl = res.avatar_url
+                    const followers = res.followers
+                    const bio = res.bio
+                    //console.log({name, avatarUrl, followers, bio})
+                
+                    // <img src:"https://avatars.githubusercontent.com/u/152535675?v=4" width:"128      />
+                    const avatarEl = document.createElement("img")
+                    avatarEl.setAttribute("width", "128")
+                    avatarEl.setAttribute("src", avatarUrl)
+
+                    //<h1>Pedro Barbas</h1>
+                    const nameEl = document.createElement("h1")
+                    nameEl.innerHTML = name
+
+                    //<p>Followers: X</p>
+                    const followersEl = document.createElement("p")
+                    followersEl.innerHTML = `Followers: ${followers}`
+
+                    //<p> bio </p>
+                    const bioEL = document.createElement("p")
+                    bioEL.innerHTML = bio
+
+                    /*Se fosse um link, ex.:blog
+
+                     * <a href:"http://blog.com.br">blog.com.br</a>
+                     * const blogEl = document.createElement("a")
+                     * blogEl.setAtribute("href", `https://$blogUrl`)
+                     * blogEL.innerHTML = blogUrl
+                     */
+                    
+                     // Para realizar
+
+                    document.body.appendChild (avatarEl)
+                    document.body.appendChild (nameEl)
+                    document.body.appendChild (followersEl)
+                    document.body.appendChild(bioEL)
+
+                }
+            }
+        }
+
+        const buttonEl = document.querySelector("button")
+        buttonEl.addEventListener("click", loadData)
+    </script>
+</body>
+</html>
